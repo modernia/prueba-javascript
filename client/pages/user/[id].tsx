@@ -53,7 +53,8 @@ export default function id({data, getHistory}) {
 					<h2 className="text-xl">Historial de Compras</h2>
 
 					{
-						getHistory.map((product, index) => <History key={index} {...product} /> )
+						getHistory !== null && getHistory.map((product, index) => <History key={index} {...product} /> )
+
 					}
 
 					
@@ -74,7 +75,7 @@ id.getInitialProps = async (ctx) => {
 
 
 	return {
-		data: getUser,
+		data: getUser || null,
 		getHistory		
 	}
 

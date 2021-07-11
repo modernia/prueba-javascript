@@ -94,8 +94,8 @@ async function deleteUser(id){
     if(!user) throw new Error('El usuario no existe')
     const cart = await ShoppingCart.findOne({_id: user.history})  
   
-    await user.remove();
-    await cart.remove()
+    await user.delete();
+    await cart.delete()
 
     return true
   } catch (error) {

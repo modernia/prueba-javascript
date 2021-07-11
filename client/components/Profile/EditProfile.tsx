@@ -54,6 +54,8 @@ export default function EditProfile({user, logout}) {
 	  	logout();
 			removeItemsCart()
 	    router.push('/');
+      	toast.success('Cuenta eliminada')
+
     })
     	
   }
@@ -154,11 +156,15 @@ export default function EditProfile({user, logout}) {
 							auth.id === user.id && <button type="submit" className="bg-blue-800 px-3 py-2 mt-3 w-full rounded text-white">Actualizar mis datos</button>
 						}
 
-						{
-							auth.id === user.id && <button onClick={handleDelete} className="bg-red-800 px-3 py-2 mt-3 w-full rounded text-white">Eliminar mi cuenta</button>
-						}
 						
 					</form>
+					{
+						auth.id === user.id && (
+							<div className="p-4">
+								<div onClick={handleDelete} className="cursor-pointer bg-red-800 px-3 py-2 mt-3 w-full rounded text-white">Eliminar mi cuenta</div>
+							</div>
+							)
+					}
 
 					
 				</div>

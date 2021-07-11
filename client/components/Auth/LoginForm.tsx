@@ -33,7 +33,7 @@ export default function LoginForm({setShowLogin}) {
         setError('');
 
       } catch (error) {
-        toast.error(error.message)
+        toast.error("Contraseña y/o correo incorrectos")
         setError(error.message);
       }
       
