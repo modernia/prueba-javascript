@@ -19,9 +19,6 @@ async function createProduct(input) {
 
   const {price, stock, name, image} = newProduct
 
-  console.log(input)
-  
-
   try{
     const product = new Product(newProduct)
     product.save()
@@ -36,7 +33,6 @@ async function createProduct(input) {
 }
 
 async function getProduct({id}){
-  console.log(id)
 	let product = null;
 	if(id) product = await Product.findById({_id: id});
 
@@ -60,21 +56,6 @@ async function getProducts(){
 }
 
 
-/*
-
-async function deleteAvatar(idProduct) {
-
-  try {
-    await User.findByIdAndUpdate({_id: idProduct}, {avatar: ''})
-    return true
-
-  } catch(e) {
-    return false
-  }
-
-}
-*/
-
 async function updateProduct(input) {
   const role = userRoleValid(input.userId)
   
@@ -82,8 +63,13 @@ async function updateProduct(input) {
 
   try {
 
-    console.log(input)
-    await Product.findByIdAndUpdate(idProduct, input)
+    const product = await Product.findByIdAndUpdate(input.productId, {
+      name: input.name,
+      stock: input.stock,
+      price: input.price,
+    })
+
+    return true
 
   } catch (error) {
     return false
@@ -101,8 +87,6 @@ async function sellProduct(input) {
         const product = await Product.findById(p.productId)      
 
         if(product?.stock < products[index].amount) return false
-        console.log(product)
-
 
         product.stock = product.stock - products[index].amount;
 
@@ -130,13 +114,21 @@ async function sellProduct(input) {
 
 }
 
+async function deleteProduct(id){
+  let product = null;
 
-async function search(search) {
-  const users = await User.find({
-    name: { $regex: search, $options: 'i'}
-  })
+  try {
+    if(id) product = await Product.findById(id);
 
-  return users
+    if(!product) throw new Error('El producto no existe')
+  
+    await product.remove();
+
+    return true
+  } catch (error) {
+    return false
+  }
+  
 }
 
 
@@ -153,5 +145,5 @@ module.exports = {
   getProducts,
   sellProduct,
   updateProduct,
-  search
+  deleteProduct
 }

@@ -1,12 +1,15 @@
 import { useState } from 'react'
+import { useRouter } from 'next/router'
+
 import Link from 'next/link'
 import { UserAdd, AtSymbol, User, Identification, LockClosed, LocationMarker } from 'heroicons-react'
 import { useMutation } from 'react-query'
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify'
+import { removeItemsCart } from '../../utils/cart'
 
-import { UPDATE_USER } from '../../gql/user'
+import { UPDATE_USER, DELETE_USER } from '../../gql/user'
 import useAuth from '../../hooks/useAuth';
 
 
@@ -15,6 +18,7 @@ export default function EditProfile({user, logout}) {
 
 	const [error, setError] = useState('');
   const { auth } = useAuth();
+	const router = useRouter()
 
 
 
@@ -44,11 +48,21 @@ export default function EditProfile({user, logout}) {
     }
   });
 
+  const handleDelete = async () => {
+
+    DELETE_USER(auth.id).then((result) => {
+	  	logout();
+			removeItemsCart()
+	    router.push('/');
+    })
+    	
+  }
+
 	return (
 		
-			<div className="flex flex-col mt-4 md:max-w-screen-sm mx-auto" style={{minHeight: '450px'}}>
+			<div className="box-border flex flex-col mt-4 md:w-11/12 max-w-screen-sm mx-auto" style={{minHeight: '450px'}}>
 				<div className="shadow-md flex flex-col mx-auto mt-3 md:w-1/3 sm:min-w-full border-green-300 border-2 ">
-					<h1 className="text-blue-900 text-2xl mb-2 text-center">
+					<h1 className="text-blue-900 text-2xl mb-2 text-center pt-4">
 						Información de tu cuenta
 					</h1>
 					<form className="flex flex-col p-4" onSubmit={formik.handleSubmit}>
@@ -139,7 +153,13 @@ export default function EditProfile({user, logout}) {
 						{
 							auth.id === user.id && <button type="submit" className="bg-blue-800 px-3 py-2 mt-3 w-full rounded text-white">Actualizar mis datos</button>
 						}
+
+						{
+							auth.id === user.id && <button onClick={handleDelete} className="bg-red-800 px-3 py-2 mt-3 w-full rounded text-white">Eliminar mi cuenta</button>
+						}
+						
 					</form>
+
 					
 				</div>
 				

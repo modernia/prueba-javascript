@@ -1,13 +1,11 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
 
-import useAuth from '../hooks/useAuth'
+import useAuth from '../../hooks/useAuth'
 
-import Header from '../components/Header/Header'
-import AllProducts from '../components/Product/AllProducts'
+import Header from '../../components/Header/Header'
+import AllProducts from '../../components/Product/AllProducts'
 
 export default function Home() {
 
@@ -27,10 +25,8 @@ export default function Home() {
       <Header />
       
       <main className="mx-auto md:max-w-screen-sm flex flex-col mx-auto">
-        <h2 className="text-2xl text-black border-b-2 border-gray-200">Productos en stock</h2>
-        <AllProducts listAdminPage={false} showAll={false}/>
+        <AllProducts listAdminPage={true} showAll={true}/>
       </main>
-
     </div>
   )
 }

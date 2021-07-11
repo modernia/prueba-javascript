@@ -35,8 +35,6 @@ export const LOGIN = async (input) => {
       input: input
     }
   )
-
-  console.log(login)
   return login
 }
 
@@ -51,6 +49,7 @@ export const GET_USER = async (id) => {
 				lastname,
 				email,
 				address,
+				role
 			}
 		}
 	`, {
@@ -61,6 +60,22 @@ export const GET_USER = async (id) => {
 	return {getUser, loading}
 
 }
+
+export const DELETE_USER = async (id) => {
+
+	const { deleteUser } = await graphQLClient.request(gql`
+		mutation deleteUser($id: ID) {
+			deleteUser(id: $id)
+		}
+	`, {
+			id
+		}
+	)
+
+	return deleteUser
+
+}
+
 
 
 export const UPDATE_USER = async (input) => {
@@ -86,6 +101,7 @@ export const GET_HISTORY = async (id) => {
 				image,
 				stock,
 				amount,
+				price
 			}
 		}
 	`, {
@@ -93,8 +109,5 @@ export const GET_HISTORY = async (id) => {
 		}
 	)
 	
-	console.log(getHistory)
-
 	return {getHistory}
-
 }

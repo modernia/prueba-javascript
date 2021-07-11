@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Trash, ArrowLeft, ArrowRight } from 'heroicons-react'
+import { Trash, ArrowLeft, ArrowRight, PlusSm, MinusSm } from 'heroicons-react'
 import { toast } from 'react-toastify'
 
 import { getProductsObject, addNewProductCartObject, removeItemsCart } from '../../utils/cart'
@@ -98,13 +98,13 @@ export default function TableProducts() {
 
 	return (
 		<>
-			<div className="list mx-auto">
+			<div className="list mx-auto p-2">
 				<div className="header flex text-xl border-b-2 border-gray-400 my-3">
-					<div className="w-1/5">Producto</div>
-					<div className="w-1/5">Precio</div>
-					<div className="w-1/5">Cantidad</div>
-					<div className="w-1/5">Sub Total</div>
-					<div className="w-1/5"></div>
+					<div className="w-1/5 sm-text-xs">Producto</div>
+					<div className="w-1/5 sm-text-xs">Precio</div>
+					<div className="w-1/5 sm-text-xs">Cantidad</div>
+					<div className="w-1/5 sm-text-xs">Sub Total</div>
+					<div className="w-1/5 sm-text-xs"></div>
 				</div>
 
 				<div className="products flex flex-col">
@@ -112,15 +112,19 @@ export default function TableProducts() {
 					{
 						products.map((product, index) => (
 							<div className="product flex mb-2" key={product.id} >
-								<div className="w-1/5">{product.name}</div>
-								<div className="w-1/5"> ${product.price} USD</div>
-								<div className="w-1/5 flex">
-										<button onClick={() => update(product.id, '-')} className="text-gray-800 text-center px-1">-</button>
-										<span className="text-gray-800 text-center px-1">{product.amount}</span>
-										<button onClick={() => update(product.id, '+')} className="text-gray-800 text-center px-1">+</button>
+								<div className="w-1/5 sm-text-xs">{product.name}</div>
+								<div className="w-1/5 sm-text-xs"> ${product.price} USD</div>
+								<div className="w-1/5 sm-text-xs flex">
+										<button onClick={() => update(product.id, '-')} className="text-gray-800 text-center px-1">
+											<MinusSm color="#000" />
+										</button>
+										<span className="text-gray-800 text-center px-1 sm-text-xs">{product.amount}</span>
+										<button onClick={() => update(product.id, '+')} className="text-gray-800 text-center px-1">
+											<PlusSm color="#000" />
+										</button>
 								</div>
-								<div className="w-1/5">${product.amount * product.price} USD</div>
-								<div className="w-1/5"><Trash onClick={() => removeProduct(product.id)} color="#fff" size={25} className="hover:bg-red-8w00 rounded cursor-pointer bg-red-600 p-1"/></div>
+								<div className="w-1/5 sm-text-xs">${product.amount * product.price} USD</div>
+								<div className="w-1/5 sm-text-xs"><Trash onClick={() => removeProduct(product.id)} color="#fff" size={25} className="hover:bg-red-8w00 rounded cursor-pointer bg-red-600 p-1"/></div>
 							</div>
 
 						))
@@ -128,19 +132,19 @@ export default function TableProducts() {
 
 				</div>
 
-				<div className="flex justify-between my-4">
-					<button className="py-1 px-4 bg-green-800 text-white" onClick={getTotal}>Calcular total</button>
+				<div className="flex justify-between my-4 options-store">
+					<button className="py-1 rounded px-4 bg-green-800 text-white sm-text-xs" onClick={getTotal}>Calcular total</button>
 					<span>Total $ {total} USD</span>
 				</div>
 			</div>
 
-			<div className="flex justify-between mt-4 my-4">
-				<div className="flex py-2 px-3 bg-green-500 rounded hover:bg-green-700 text-white text-base">
+			<div className="flex justify-between mt-4 p-2 my-4 options-store">
+				<div className="flex py-2 px-3 my-4 bg-green-500 sm-text-xs rounded hover:bg-green-700 text-white text-base">
 					<ArrowLeft color="#fff" />
 					<Link href="/">Continue comprando</Link>
 				</div>
 
-				<div className="flex align-center py-2 px-3 bg-green-500 rounded hover:bg-green-700 text-white text-base">
+				<div className="flex align-center my-4 py-2 px-3 sm-text-xs bg-green-500 rounded hover:bg-green-700 text-white text-base">
 					<button onClick={handleSell}>Pagar</button>
 					<ArrowRight color="#fff" />
 				</div>

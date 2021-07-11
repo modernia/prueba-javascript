@@ -19,12 +19,15 @@ const resolvers = {
     register: async (_, {input}) => userController.register(input),
     login: (_, { input }) => userController.login(input),
     updateUser: (_, {input}) => userController.updateUser(input),
-    //deleteAvatar: (_, {}, ctx) => userController.deleteAvatar(ctx),
+    deleteUser: (_, {id}) => userController.deleteProduct(id),
 
 
     // Product
     createProduct: (_, {input}) => productController.createProduct(input),
     sellProduct: (_, {input}) => productController.sellProduct(input),
+    updateProduct: (_, {input}) => productController.updateProduct(input),
+    deleteProduct: (_, {id}) => productController.deleteProduct(id),
+
 
   }
 

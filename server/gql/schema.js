@@ -8,6 +8,7 @@ const typeDefs = gql`
     address: String
     password: String
     email: String
+    role: String
   }
 
   type Product {
@@ -66,6 +67,13 @@ const typeDefs = gql`
     userId: String!
   }
 
+  input ProductUpdateInput {
+    name: String
+    stock: String
+    price: String
+    userId: String
+    productId: String
+  }
 
 
   type Query {
@@ -84,13 +92,14 @@ const typeDefs = gql`
     # User
     register(input: UserInput): User
     login(input: LoginInput): Token
+    deleteUser(id: ID): Boolean
     updateUser(input: UserUpdateInput): Boolean
 
     # Product
     createProduct(input: ProductInput): Product
     sellProduct(input: ProductSellInput): Boolean
-
-
+    updateProduct(input: ProductUpdateInput): Boolean
+    deleteProduct(id: ID): Boolean
 
   }
 `

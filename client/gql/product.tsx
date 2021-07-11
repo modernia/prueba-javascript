@@ -40,6 +40,8 @@ export const GET_PRODUCTS = async () => {
 }
 
 export const GET_PRODUCT = async (id) => {
+
+
 	const {getProduct} = await graphQLClient.request(gql`
 		query getProduct($id: ID) {
 			getProduct(id: $id) {
@@ -59,6 +61,21 @@ export const GET_PRODUCT = async (id) => {
 }
 
 
+export const DELETE_PRODUCT = async (id) => {
+
+
+	const {deleteProduct} = await graphQLClient.request(gql`
+		mutation deleteProduct($id: ID) {
+			deleteProduct(id: $id)
+		}
+	`,{
+			id
+		}
+	)
+
+	return deleteProduct
+}
+
 export const SELL_PRODUCT = async (input) => {
 
 	const {sellProduct} = await graphQLClient.request(gql`
@@ -72,4 +89,19 @@ export const SELL_PRODUCT = async (input) => {
 	)
 
 	return sellProduct
+}
+
+export const UPDATE_PRODUCT = async (input) => {
+	const updateProduct = await graphQLClient.request(gql`
+	  mutation updateProduct ($input: ProductUpdateInput) {
+	    updateProduct (input: $input)
+	  }
+	`, {
+			input
+		}
+	);
+
+	console.log("updateProduct", updateProduct )
+
+	return updateProduct
 }

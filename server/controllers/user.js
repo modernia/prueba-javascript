@@ -26,7 +26,6 @@ function createToken(user, SECRET_KEY, expiresIn) {
 
 
 async function register(input) {
-  console.log("input", input)
   const newUser = input
 
   const {email, name, password, lastname, address} = newUser
@@ -86,6 +85,26 @@ async function getUser(id){
 	
 }
 
+async function deleteUser(id){
+  let user = null;
+
+  try {
+    if(id) user = await User.findById(id);
+
+    if(!user) throw new Error('El usuario no existe')
+    const cart = await ShoppingCart.findOne({_id: user.history})  
+  
+    await user.remove();
+    await cart.remove()
+
+    return true
+  } catch (error) {
+    return false
+  }
+  
+}
+
+
 async function getUsers(){
   let users = [];
   if(id) users = await User.find();
@@ -103,9 +122,6 @@ async function updateUser(input) {
   try {
 
     const result = await User.findByIdAndUpdate({_id: input.userId}, input)
-
-    console.log(result)
-
     return true
 
 
@@ -116,6 +132,8 @@ async function updateUser(input) {
 
 
 async function getHistory(id) {
+  let products = []
+
   try {
 
     const user = await User.findOne({_id: id})
@@ -125,24 +143,22 @@ async function getHistory(id) {
 
     let cart = await ShoppingCar.findOne({_id: user.history})
 
-    let products = []
 
-    products = cart.products.map(async (p) => {
+    return cart.products.map(async (p) => {
 
-      let product = await Product.findOne({_id: p.productId})
-
-      console.log(product)
+      const product = await Product.findById(p.productId)
 
       return {
         amount: p.amount,
-        product
+        id: p.productId,
+        name: product.name,
+        stock: product.stock,
+        image: product.image,
+        price: product.price
       }
     })
 
 
-
-
-    return products
 
 
   } catch (error) {
@@ -168,5 +184,6 @@ module.exports = {
   getUser,
   getUsers,
   updateUser,
-  getHistory
+  getHistory,
+  deleteUser
 }
