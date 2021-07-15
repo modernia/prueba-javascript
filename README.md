@@ -21,7 +21,8 @@ También puede levantar la aplicación con el siguiente comando `npm run dev -p 
 * Solo los usuario logueados pueden agregar productos al carrito.
 * Los usuarios con rol `ADMIN_ROLE` pueden editar la información de los productos.
 * Los usuarios logueados pueden editar su información (a excepción de la contraseña) sin importar el rol que tengan.
-* Los productos que ya no tengan stock disponible y esten agregados al carrito no se eliminaran automaticamente, pero no se le permite hace la compra de los productos.
+* Los usuarios con rol `ADMIN_ROLE` pueden ver todos los productos aunque ya no haya stock disponile.
+* Los productos que ya no tengan stock disponible y esten agregados al carrito no se eliminaran automaticamente, pero no se le permite hacer la compra de los productos.
 
 
 Por defecto los usuarios son creados con el rol `ADMIN_ROLE` para cambiar el rol, ir al modelo user que se encuentra en la carpeta `server/models`. En el archivo `user.js` en la propiedad `role` modificarlo a `USER_ROLE`. Por el momento solo admite dos tipos de usuario.
