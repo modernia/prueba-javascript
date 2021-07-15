@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Check } from 'heroicons-react'
 import { toast } from 'react-toastify'
+import { size } from 'lodash'
 
 
 import { addProductCart, getProducts, addProductCartObject } from '../../utils/cart'
@@ -34,16 +35,16 @@ export default function  AllProducts({listAdminPage, showAll}) {
 		} else {
 			toast.info('Inicia sesión o crea una cuenta para agrgar productos al carrito')	
 		}
-
 	}
-	
+
 
 
 	return (
 		<>
 
 		{
-			products && (
+			size(products) > 0 
+			? (
 				<div className="flex p-2 flex-wrap text-center justify-between">
 
 					{ 
@@ -100,7 +101,10 @@ export default function  AllProducts({listAdminPage, showAll}) {
 					}
 
 				</div>
-				)
+			)
+			: (
+				<div className="text-xl text-gray-800 p-4">No hay productos</div>	
+			)
 		}
 
 

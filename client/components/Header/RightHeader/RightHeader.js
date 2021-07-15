@@ -26,9 +26,6 @@ export default function RightHeader() {
           </a>
         </Link>
 
-        {
-          auth?.role === 'ADMIN_ROLE' && <Link href='/product/create'><ViewGridAdd className="cursor-pointer mr-1" /></Link>
-        }
 
         {
           auth === null

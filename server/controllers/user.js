@@ -2,7 +2,7 @@ const bcryptjs = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
 const User = require('../models/user')
-const ShoppingCar = require('../models/shopping-cart')
+const ShoppingCart = require('../models/shopping-cart')
 const Product = require('../models/product')
 
 
@@ -40,7 +40,7 @@ async function register(input) {
   newUser.password = await bcryptjs.hash(password, salt)
 
   try{
-    const cart = new ShoppingCar({
+    const cart = new ShoppingCart({
       products: []
     })
     cart.save()
@@ -86,18 +86,24 @@ async function getUser(id){
 }
 
 async function deleteUser(id){
-  let user = null;
 
   try {
-    if(id) user = await User.findById(id);
+    
 
-    if(!user) throw new Error('El usuario no existe')
-    const cart = await ShoppingCart.findOne({_id: user.history})  
-  
-    await user.delete();
-    await cart.delete()
+    User.findByIdAndDelete(id, (err, user) => {
+      if (err){
+        console.log(err)
+      }
 
-    return true
+      ShoppingCart.findOneAndDelete(user.history, (error, cart ) => {
+        if (err){
+          console.log(err)
+        }
+
+        return true
+      })
+
+    })
   } catch (error) {
     return false
   }
@@ -141,7 +147,7 @@ async function getHistory(id) {
     if(!user) throw new Error('El usuario no existe')
 
 
-    let cart = await ShoppingCar.findOne({_id: user.history})
+    let cart = await ShoppingCart.findOne({_id: user.history})
 
 
     return cart.products.map(async (p) => {

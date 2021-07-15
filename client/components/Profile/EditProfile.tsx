@@ -160,9 +160,15 @@ export default function EditProfile({user, logout}) {
 					</form>
 					{
 						auth.id === user.id && (
-							<div className="p-4">
-								<div onClick={handleDelete} className="cursor-pointer bg-red-800 px-3 py-2 mt-3 w-full rounded text-white">Eliminar mi cuenta</div>
-							</div>
+								<>
+									<div className="px-4 pb-4 text-center">
+										<div onClick={() => logout()} className="cursor-pointer bg-yellow-800 px-3 py-2 mt-2 w-full rounded text-white">Cerrar sesion</div>
+									</div>
+									<div className="px-4 text-center">
+										<div onClick={handleDelete} className="cursor-pointer bg-red-800 px-3 py-2 mb-2 w-full rounded text-white">Eliminar mi cuenta</div>
+									</div>
+								</>
+
 							)
 					}
 

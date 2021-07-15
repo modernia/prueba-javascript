@@ -79,29 +79,16 @@ async function updateProduct(input) {
 async function sellProduct(input) {
   
   const {userId, products} = input
+
+  try {
+    await products.forEach( async (p,index) => {
   const user = await User.findOne({_id: userId})
 
- try {
-    products.map( async (p,index) => {
 
-        const product = await Product.findById(p.productId)      
+        await sellProductByOne(p, products[index].amount, user.history)
+        
 
-        if(product?.stock < products[index].amount) return false
-
-        product.stock = product.stock - products[index].amount;
-
-        const cart = await ShoppingCart.findOne({_id: user.history})
-
-        cart.products = [
-          ...cart.products,
-          {
-            productId: product._id,
-            amount: products[index].amount
-          }
-        ];
-        cart.save()
-        product.save()
-
+        return true
 
     })
     
@@ -109,7 +96,6 @@ async function sellProduct(input) {
   } catch (error) {
     return false
   }
-
 
 
 }
@@ -129,6 +115,29 @@ async function deleteProduct(id){
     return false
   }
   
+}
+
+
+async function sellProductByOne(p, amount, idCart) {
+  let product = await Product.findById(p.productId)
+
+  if(product?.stock < amount) return false
+
+  product.stock = product.stock - amount;
+  
+
+  let cart = await ShoppingCart.findById(idCart)
+
+  cart.products.push({
+      productId: product._id,
+      amount
+    })
+
+  delete cart.__v
+
+  await cart.save()
+  await product.save()
+
 }
 
 

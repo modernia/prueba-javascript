@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Trash, ArrowLeft, ArrowRight, PlusSm, MinusSm } from 'heroicons-react'
 import { toast } from 'react-toastify'
+import { size } from 'lodash'
 
 import { getProductsObject, addNewProductCartObject, removeItemsCart } from '../../utils/cart'
 import { SELL_PRODUCT } from '../../gql/product'
@@ -71,7 +72,7 @@ export default function TableProducts() {
 
   const handleSell = () => {
   	let newProducts = {}
-  	newProducts.products = []
+  	newProducts.products = null
 
   	newProducts.products = products.map(p => {
 
@@ -82,15 +83,19 @@ export default function TableProducts() {
     });
     newProducts.userId = auth.id
 
-		SELL_PRODUCT(newProducts).then(result => {
-			if(result){
-				removeItemsCart()
-				setProducts([])
-				setTotal(0)
+		if(size(newProducts.products) > 0) {
+			SELL_PRODUCT(newProducts).then(result => {
+				if(result){
+					removeItemsCart()
+					setProducts([])
+					setTotal(0)
 
-  			toast.success('Has comprado')
-			}
-		})
+	  			toast.success('Has comprado')
+				}
+			})
+		}else {
+			toast.info('Primero debes agregar productos al carrito')
+		}
 
 
   }
