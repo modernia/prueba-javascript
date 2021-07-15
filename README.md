@@ -1,8 +1,8 @@
 # Desafío tecnico fullstack
 
 ### Requisitos
-* Es necesario tener instalado MongoDB en su equipo
-* Abra una terminal y coloque el siguiente comando `sudo mongod` para Linux y Mac. En Windows abra un cmd con permisos de administrador y escriba `mongod`
+* Es necesario tener instalado MongoDB en su equipo.
+* Cuando lo tenga instalado, abra una terminal y coloque el siguiente comando `sudo mongod` para Linux y Mac. En Windows abra un cmd con permisos de administrador y escriba `mongod`
 
 ### Instrucciones
 
